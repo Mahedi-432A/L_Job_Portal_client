@@ -7,6 +7,12 @@ const SocialLogin = () => {
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
+        .then((result) => {
+          console.log(result);
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
 
   return (
