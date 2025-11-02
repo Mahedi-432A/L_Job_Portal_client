@@ -1,11 +1,14 @@
 import React from "react";
 import Banner from "./Banner";
+import HotJobs from "./HotJobs";
 
 const Home = () => {
+
+  // const jobsPromise = fetch('http://localhost:5000/jobs').then(res => res.json())
   return (
     <>
       <Banner></Banner>
-      <div>Home</div>
+      <HotJobs></HotJobs>
     </>
   );
 };
