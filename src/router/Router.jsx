@@ -26,7 +26,8 @@ let Router = createBrowserRouter([
         },
         {
           path:'/jobs/:id',
-          Component: JobDetails
+          Component: JobDetails,
+          loader: ({params}) => fetch(`http://localhost:5000/jobs/${params.id}`)
         }
     ]
     // element: <div>Fuck you!</div>
