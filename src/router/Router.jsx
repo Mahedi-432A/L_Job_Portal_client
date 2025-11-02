@@ -5,6 +5,7 @@ import { RootLayout } from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
 import LogIn from "../pages/LogIn/LogIn";
+import JobDetails from "../pages/JobDetails/JobDetails";
 
 let Router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ let Router = createBrowserRouter([
         {
           path: "/login",
           Component: LogIn
+        },
+        {
+          path:'/jobs/:id',
+          Component: JobDetails
         }
     ]
     // element: <div>Fuck you!</div>

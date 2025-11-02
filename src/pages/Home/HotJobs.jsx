@@ -1,28 +1,30 @@
 
-import { useEffect, useState } from 'react';
+import { use } from 'react';
 import JobCard from '../Shared/JobCard';
 
-const HotJobs = () => {
+const HotJobs = ({jobsPromise}) => {
 
-    const [jobs, setJobs] = useState();
-    const [loading, setLoading] = useState(true);
+  const jobs = use(jobsPromise);
 
-    useEffect( () => {
-      fetch('http://localhost:5000/jobs')
-      .then(res => res.json())
-      .then((data) => {
-        setJobs(data);
-        setLoading(false);
-        // console.log(data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    },[])
+    // const [jobs, setJobs] = useState();
+    // const [loading, setLoading] = useState(true);
 
-    if(loading) {
-      return <div>Loading ---------------/</div>
-    }
+    // useEffect( () => {
+    //   fetch('http://localhost:5000/jobs')
+    //   .then(res => res.json())
+    //   .then((data) => {
+    //     setJobs(data);
+    //     setLoading(false);
+    //     // console.log(data)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
+    // },[])
+
+    // if(loading) {
+    //   return <div>Loading ---------------/</div>
+    // }
 
   return (
     <div>
