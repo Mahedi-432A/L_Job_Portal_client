@@ -1,11 +1,44 @@
-import React from 'react'
+import React from "react";
+import { Link, useParams } from "react-router";
+import useAuth from "../../hooks/useAuth";
 
 const JobApply = () => {
-  return (
-    <div>
-        <h3 className='text-4xl text-center'>Apply Job For</h3>
-    </div>
-  )
-}
+  const { id: jobId } = useParams();
+  const { user } = useAuth();
 
-export default JobApply
+  console.log(jobId, user);
+
+  const handleApplyFormSubmit = e =>{
+    e.preventDefault();
+    const form = e.target;
+    const linkedIn = form.linkedIn.value;
+    const github = form.github.value;
+    const resume = form.resume.value;
+
+    console.log(linkedIn, github, resume);
+  }
+
+  return (
+    <div className="my-10">
+      <h3 className="text-4xl mb-6 text-center">Apply for this Job : <Link to={`/jobs/${jobId}`}>details</Link></h3>
+
+      <form onSubmit={handleApplyFormSubmit} className="w-fit mx-auto">
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+
+          <label className="label">LinkedIn Link</label>
+          <input type="url" name="linkedIn" className="input" placeholder="LinkedIn Profile Link" />
+
+          <label className="label">Github Link</label>
+          <input type="url" name="github" className="input" placeholder="Github Profile Link" />
+
+          <label className="label">Resume Link</label>
+          <input type="url" name="resume" className="input" placeholder="Resume Link" />
+
+          <input type="submit" className="btn btn-primary" value="Apply" />
+        </fieldset>
+      </form>
+    </div>
+  );
+};
+
+export default JobApply;
