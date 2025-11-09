@@ -36,7 +36,7 @@ let Router = createBrowserRouter([
           element: <PrivateRoute><JobApply></JobApply></PrivateRoute>
         }
     ]
-    // element: <div>Fuck you!</div>
+    // element: <div>hi five!!</div>
     // loader: loadRootData,
   },
 ]);
