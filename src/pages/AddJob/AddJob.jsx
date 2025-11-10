@@ -1,21 +1,64 @@
 import React from "react";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AddJob = () => {
+  const { user } = useAuth();
 
-    const handleAddJob = (e) => {
-        e.preventDefault();
+  const handleAddJob = (e) => {
+    e.preventDefault();
 
-        const form = e.target;
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-        console.log(data);
-    }
+    // console.log(data);
+    // process salary range data
+    const { min, max, currency, ...newJob } = data;
+    newJob.salaryRange = { min, max, currency };
+
+    // process requirements data
+    const requirmentsArray = newJob.requirements
+      .split(",")
+      .map((req) => req.trim());
+    newJob.requirements = requirmentsArray;
+
+    // process responsibilities data
+    const responsibilitiesArray = newJob.responsibilities
+      .split(",")
+      .map((req) => req.trim());
+    newJob.responsibilities = responsibilitiesArray;
+
+    newJob.status = "active";
+    console.log(newJob);
+
+    // send data to server and store in database
+    axios
+      .post("http://localhost:5000/jobs", newJob)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "New job has been saved and published",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
       <h2>Please add a job</h2>
-      <form onSubmit={handleAddJob} className="grid gap-4 place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <form
+        onSubmit={handleAddJob}
+        className="grid gap-4 place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+      >
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">Basic Info</legend>
 
@@ -68,18 +111,21 @@ const AddJob = () => {
               type="radio"
               name="jobType"
               aria-label="On-Site"
+              value="On-site"
             />
             <input
               className="btn"
               type="radio"
               name="jobType"
               aria-label="Remote"
+              value="Remote"
             />
             <input
               className="btn"
               type="radio"
               name="jobType"
               aria-label="Hybrid"
+              value="Hybrid"
             />
           </div>
         </fieldset>
@@ -204,6 +250,7 @@ const AddJob = () => {
             name="hr_email"
             className="input"
             placeholder="HR Email"
+            defaultValue={user.email}
           />
         </fieldset>
 
