@@ -4,15 +4,22 @@ import { AuthContext } from "../../context/AuthContext/AuthContext";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
-  
+
   const links = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+      {/* For applicant Links. check rools as well */}
       {
         user && <>
         <li><NavLink to='/myApplications'>My Applications</NavLink></li>
+        </>
+      }
+      {/* for recruiters links. check rools as well */}
+      {
+        user && <>
+        <li><NavLink to='/addJob'>Add Job</NavLink></li>
         </>
       }
     </>
